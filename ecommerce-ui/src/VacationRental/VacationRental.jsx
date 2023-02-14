@@ -1,29 +1,12 @@
 import React, { useState, Component }  from 'react';
 import PropTypes from 'prop-types';
 import './vacation-rental.css';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import Button from "@mui/material/Button";
-
-function VacationRentalTest(props) {
-    return (
-
-        <div> 
-            <Box 
-                bgcolor={props.color} 
-                width={{xs: 550, sm: 240, md: 280, lg: 300 }} 
-                height={{xs: 150, sm: 160, md: 200, lg: 200 }}>
-                    <div>
-                        <span className='label'> Hello World</span>
-                    </div>
-            </Box>
-        </div>
-    )
-}
 
 class VacationRental extends Component {
 
@@ -100,15 +83,15 @@ class VacationRental extends Component {
     
 }
 
-
-VacationRentalTest.propTypes = {
+VacationRental.propTypes = {
     title: PropTypes.string.isRequired,
-    houseType: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
+    houseType: PropTypes.string.isRequired,
     location: PropTypes.object.isRequired,
     payment: PropTypes.object.isRequired,
     host: PropTypes.object.isRequired,
-    rating: PropTypes.object.isRequired
+    rating: PropTypes.object.isRequired,
+    propertyId: PropTypes.number.isRequired
 }    
 
 export default VacationRental;

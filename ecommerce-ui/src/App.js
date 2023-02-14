@@ -14,7 +14,7 @@ import Reservations from './Reservations/Reservations';
 import './App.css';
 
 /**
- * Main class APP
+ * Main class 
  */
 class App extends React.Component {
   static propertyData;
@@ -25,6 +25,7 @@ class App extends React.Component {
     this.properties = '';
     this.selectedPropertiesMap = new Map();
     this.isOpen = true;
+    this.selectedProperties = 0;
 
     /* Creating a new list of properties with an index */
     this.properties = bnbs.map( (property, index) => {
@@ -53,6 +54,15 @@ class App extends React.Component {
   }
 
   updateReservations(selectedProperty) {
+    console.log('>>>>> updateReservations  <<<<<<<');
+   
+    if (!selectedProperty.reserved ) {
+      console.log('>>>> REMOVING ');
+      console.log(selectedProperty);
+      this.selectedPropertiesMap.delete(selectedProperty.propertyId);
+      console.log(this.selectedPropertiesMap);
+    }
+
     this.setState({property: selectedProperty});
     this.selectedPropertiesMap.set(selectedProperty.propertyId,selectedProperty );
   }
@@ -90,7 +100,7 @@ class App extends React.Component {
                     aria-label="show 17 new notifications"
                     color="inherit"
                   >
-                    <Badge badgeContent={this.selectedPropertiesMap.size} color="error">
+                    <Badge badgeContent={ this.selectedPropertiesMap.size} color="error">
                       <ShoppingCartIcon  onClick={ () => this.handleDisplayShopCart(true) }/>
                     </Badge>
                   </IconButton>

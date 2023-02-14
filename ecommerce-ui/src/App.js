@@ -1,8 +1,4 @@
-import logo from './logo.svg';
-import { makeStyles } from '@material-ui/core';
-import Button from "@mui/material/Button";
-import Grid from '@mui/material/Grid';
-import {  Paper } from "@material-ui/core";
+
 import React from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
 import bnbs from './bnbs.json'
@@ -11,38 +7,11 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import AdbIcon from '@mui/icons-material/Adb';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Tooltip from '@mui/material/Tooltip';
-import Avatar from '@mui/material/Avatar';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import SearchIcon from '@mui/icons-material/Search';
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Modal from '@mui/material/Modal';
-import './App.css';
 import VacationRental from './VacationRental/VacationRental';
 import Reservations from './Reservations/Reservations';
-
-
-/**
- * Modal to display current vacation rentals
- */
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import './App.css';
 
 /**
  * Main class APP
@@ -78,42 +47,14 @@ class App extends React.Component {
     this.state = {property: '', displayShoppingCart: false};
   }
 
-
-  DisplayShoppingCard () {
-    console.log('displying shopping card');
-    return (
-      <Modal
-        open={this.state.displayShoppingCart}
-        onClose={this.handleDisplayShopCart(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-      <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Text in a modal
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
-      </Box>
-    </Modal>
-    );
-  }
-
   componentDidMount() {
     console.log('>>> updated properties <<');
     console.log(this.properties);
   }
 
   updateReservations(selectedProperty) {
-    // handleTextChange(selectedProperty) {
     this.setState({property: selectedProperty});
-
-    console.log('>>> Handling handleTextChange in parent');
-    // console.log(selectedProperty);
     this.selectedPropertiesMap.set(selectedProperty.propertyId,selectedProperty );
-    console.log('Properies in table');
-    console.log( this.selectedPropertiesMap.size);
   }
 
   handleDisplayShopCart(isOpen) {

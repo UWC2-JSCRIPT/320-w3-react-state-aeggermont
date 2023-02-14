@@ -61,22 +61,6 @@ class VacationRental extends Component {
             propertyId: this.propertyId
         }),
         () => this.props.updateReservations(this.state));
-
-        // this.setState( {reserved: true});
-
-        //console.log(this.state);
-        // this.props.handleTextChange(this.state);
-       
-        /*
-        setReservation( () => ({
-            reserved: true,
-            title: props.title,
-            image:  props.image,
-            houseType: props.houseType,
-            location: props.location,
-            payment: props.payment,
-            host: props.host,
-        }));*/
     }
 
     render() {
@@ -116,74 +100,6 @@ class VacationRental extends Component {
     
 }
 
-
-function  VacationRentalOld(props) {
-    const title = props.title;
-    const image = props.image;
-    const houseType = props.houseType;
-    const location = props.location;
-    const payment = props.payment;
-    const host = props.host;
-    const rating = props.rating;
-
-    const [property, setReservation] = useState({
-        reserved: false,
-        title: "",
-        image: "",
-        payment: ""
-    });
-
-    const handleReservChange = (e) => {
-        console.log('>>> handleReservChange <<<');
-        if (property.reserved ) {
-            console.log(property);
-        }
-
-        setReservation( () => ({
-            reserved: true,
-            title: props.title,
-            image:  props.image,
-            houseType: props.houseType,
-            location: props.location,
-            payment: props.payment,
-            host: props.host,
-        }));
-
-        
-    }
-  
-    return (
-      <div style={{margin: '2%'}}>
-        <Card sx={{ width: '330px', heigh: '270px' }}  xs={12} sm={4} md={3} lg={3} >
-          <CardMedia
-            component="img"
-            height="200"
-            image={image}
-            alt="Chevrolet"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h7" component="div">
-               { title }
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              { houseType }
-            </Typography> 
-            <Typography variant="body2" color="text.secondary">
-              { location.city },  { location.country }
-            </Typography> 
-            <Typography variant="body2" color="text.secondary">
-              { host.name },  { rating.stars } - { rating.reviews }
-            </Typography> 
-
-          </CardContent>
-          <CardActions>
-            <Button onClick= {()=> handleReservChange()} size="small">Reserve</Button>
-            <Button size="small">Learn More</Button>
-          </CardActions>
-        </Card>
-      </div>
-    );
-}
 
 VacationRentalTest.propTypes = {
     title: PropTypes.string.isRequired,

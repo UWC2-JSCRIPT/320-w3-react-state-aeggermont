@@ -33,8 +33,6 @@ class Reservations extends React.Component {
     this.totalCost = 0;
 
     this.selectedProperties.map((value, index) => {
-      console.log('>>>>>>>');
-      console.log(value[1].title);
       this.totalCost += value[1].payment.cost;
     });
   }

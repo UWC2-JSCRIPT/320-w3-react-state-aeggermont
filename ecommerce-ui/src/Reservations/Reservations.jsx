@@ -7,6 +7,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+import PropTypes from 'prop-types';
 
 const style = {
   position: 'absolute',
@@ -95,3 +96,8 @@ class Reservations extends React.Component {
 }
 
 export default Reservations;
+
+Reservations.propTypes = {
+  isModalOpen: PropTypes.bool.isRequired,
+  selectedProperties: PropTypes.object.isRequired
+}    

@@ -1,189 +1,198 @@
 import logo from './logo.svg';
-import './App.css';
-import VacationRental from './VacationRental/VacationRental';
 import { makeStyles } from '@material-ui/core';
 import Button from "@mui/material/Button";
 import Grid from '@mui/material/Grid';
 import {  Paper } from "@material-ui/core";
 import React from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import CardMedia from '@mui/material/CardMedia';
-import Chevrolet from './card-car.png';
 import bnbs from './bnbs.json'
-
-/*
-  xs, extra-small: 0px
-  sm, small: 600px
-  md, medium: 960px
-  lg, large: 1280px
-  xl, extra-large: 1920px
-
-  https://blog.logrocket.com/guide-mui-grid-system/
-  https://webdevassist.com/reactjs-materialui/grid-component
-  https://refine.dev/blog/material-ui-card/
-  https://mui.com/system/flexbox/
-  https://mui.com/material-ui/react-card/
-  https://stackoverflow.com/questions/60795548/material-ui-responsive-cards
-  https://medium.com/bytesizedcode/keeping-track-of-on-off-states-of-react-components-7dcec0d885cc
-  */
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-      border: '3px solid purple',
-      padding: '10px',
-      [theme.breakpoints.down('md')]: {
-        textAlign: 'center',
-      },
-      [theme.breakpoints.down('lg')]: {
-        textAlign: 'center',
-      },
-  },
-  item: {
-      padding: '10px',
-      border: '1px solid lightblue',
-  },
-}));
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import AdbIcon from '@mui/icons-material/Adb';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
+import Avatar from '@mui/material/Avatar';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import SearchIcon from '@mui/icons-material/Search';
+import Badge from '@mui/material/Badge';
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Modal from '@mui/material/Modal';
+import './App.css';
+import VacationRental from './VacationRental/VacationRental';
+import Reservations from './Reservations/Reservations';
 
 
-const PaperComponent = (props) => (
-  <Paper
-    style={{
-      backgroundColor: props.color,
-      color: "white",
-      width: "100",
-      height: "100"
-    }}
-  >
-    Paper 1
-  </Paper>
-);
+/**
+ * Modal to display current vacation rentals
+ */
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
-function Item(props: BoxProps) {
-  const { sx, ...other } = props;
-  return (
-    <Box
-      sx={{
-        p: 2,
-        m: 10,
-        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : 'grey.100'),
-        color: (theme) => (theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800'),
-        border: '1px solid',
-        borderColor: (theme) =>
-          theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
-        borderRadius: 2,
-        fontSize: '0.875rem',
-        fontWeight: '700',
-        ...sx,
-      }}
-      {...other}
-    />
-  );
-}
+/**
+ * Main class APP
+ */
+class App extends React.Component {
+  static propertyData;
+  
+  constructor(props) {
+    super(props);
+    this.propertyData = bnbs;
+    this.properties = '';
+    this.selectedPropertiesMap = new Map();
+    this.isOpen = true;
 
-function  CardDemo(props) {
-  const title = props.properyInfo.title;
-  const image = props.properyInfo.image;
+    /* Creating a new list of properties with an index */
+    this.properties = bnbs.map( (property, index) => {
+      return (
+        {
+          "title": property.title,
+          "houseType": property.houseType  ,
+          "image":  property.image ,
+          "location":  property.location ,
+          "payment":  property.payment ,
+          "host":  property.host,
+          "rating":  property.rating,
+          "propertyId" : index
+        }
+      );
+    });
 
-  console.log('PROPS');
-  console.log(props);
-  return (
-    <div style={{margin: '2%'}}>
-      <Card sx={{ width: '300px', heigh: '257px' }}  xs={12} sm={4} md={3} lg={3} >
-        <CardMedia
-          component="img"
-          height="200"
-          image={image}
-          alt="Chevrolet"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            { title }
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-          Chevrolet is an iconic American car brand known for its reliable, dependable, and affordable vehicles. Founded in 1911, Chevy has become one of the most recognizable car brands in the world.
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
-    </div>
-  );
-}
+    console.log(this.propertyData);
+    this.updateReservations = this.updateReservations.bind(this);
+    this.state = {property: '', displayShoppingCart: false};
+  }
 
-function GridExample () {
-  return (
-    <div className="App">
-      <Grid spacing={3}
-        container
-        direction="row">
-        <Grid item xs={12} sm={4} md={3} lg={3} spacing={3} >
-          <VacationRental color="red" property="One" />
-        </Grid>
-        <Grid item xs={12} sm={4} md={3} lg={3} spacing={3}>
-          <VacationRental color="blue" property="Two"  />
-        </Grid>
-        <Grid item xs={12} sm={4} md={3} lg={3} spacing={3}>
-          <VacationRental color="green" property="Three"  />
-        </Grid>
-        <Grid item xs={12} sm={4} md={3} lg={3} spacing={3}>
-          <VacationRental color="red" property="Four"  />
-        </Grid>
-        <Grid item xs={12} sm={4} md={3} lg={3} spacing={3}>
-          <VacationRental color="blue" property="Five"  />
-        </Grid>
-        <Grid item xs={12} sm={4} md={3} lg={3} spacing={3}>
-          <VacationRental color="green" property="Six"  />
-        </Grid>
-        <Grid item xs={12} sm={4} md={3} lg={3} spacing={3}>
-          <VacationRental color="red" property="Seven"  />
-        </Grid>
-        <Grid item xs={12} sm={4} md={3} lg={3} spacing={3}>
-          <VacationRental color="blue" property="Eight"  />
-        </Grid>
-      </Grid>
-    </div>
-  )
-}
 
-function App() {
-
-  bnbs.map(propery => (
-    console.log(propery)
-  ));
-
-  return (
-    <div>
-      <Box
-       
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignContent: 'flex-start',
-          justifyContent: 'center',
-          p: 1,
-          m: 1,
-          bgcolor: 'background.paper',
-          height: '100%',
-          width: '100%',
-          borderRadius: 1,
-        }}
+  DisplayShoppingCard () {
+    console.log('displying shopping card');
+    return (
+      <Modal
+        open={this.state.displayShoppingCart}
+        onClose={this.handleDisplayShopCart(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        { bnbs.map(propery => (
-          <CardDemo properyInfo={propery} />
-        ))}
-          
-         
-         
-       
+      <Box sx={style}>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          Text in a modal
+        </Typography>
+        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+        </Typography>
       </Box>
-    </div>
-  );
+    </Modal>
+    );
+  }
+
+  componentDidMount() {
+    console.log('>>> updated properties <<');
+    console.log(this.properties);
+  }
+
+  updateReservations(selectedProperty) {
+    // handleTextChange(selectedProperty) {
+    this.setState({property: selectedProperty});
+
+    console.log('>>> Handling handleTextChange in parent');
+    // console.log(selectedProperty);
+    this.selectedPropertiesMap.set(selectedProperty.propertyId,selectedProperty );
+    console.log('Properies in table');
+    console.log( this.selectedPropertiesMap.size);
+  }
+
+  handleDisplayShopCart(isOpen) {
+    this.setState({displayShoppingCart: isOpen }); 
+  }
+
+  render() {
+    return (
+      <div> 
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+              <Toolbar>
+                <IconButton
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="open drawer"
+                  sx={{ mr: 2 }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{ display: { xs: 'none', sm: 'block' } }}
+                > Short Term Reservations
+                </Typography>
+                <Box sx={{ flexGrow: 1 }} />
+                <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                  <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                  >
+                    <Badge badgeContent={this.selectedPropertiesMap.size} color="error">
+                      <ShoppingCartIcon  onClick={ () => this.handleDisplayShopCart(true) }/>
+                    </Badge>
+                  </IconButton>
+                </Box>
+              </Toolbar>
+          </AppBar>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignContent: 'flex-start',
+            justifyContent: 'center',
+            p: 1,
+            m: 1,
+            bgcolor: 'background.paper',
+            height: '100%',
+            width: '100%',
+            borderRadius: 1,
+          }}>
+          { this.properties.map(propery => (
+            <VacationRental
+              updateReservations={this.updateReservations}
+              title={propery.title }
+              houseType={propery.houseType}
+              image={propery.image}
+              location={propery.location} 
+              payment={propery.payment}
+              host={propery.host}
+              rating={propery.rating}
+              propertyId={propery.propertyId}
+            />
+          ))}     
+        </Box>
+        {this.state.displayShoppingCart && (
+          <Reservations 
+            selectedProperties={this.selectedPropertiesMap}
+            isModalOpen={this.state.displayShoppingCart}
+           />
+        )}
+      </div>
+    );
+  }
 }
 
 export default App;

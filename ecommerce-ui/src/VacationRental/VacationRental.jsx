@@ -74,7 +74,6 @@ class VacationRental extends Component {
                 <CardActions>
                     <Button onClick= {()=> this.handleReservChange(true)} size="small">Reserve</Button>
                     <Button onClick= {()=> this.handleReservChange(false)} size="small">Remove</Button>
-                    <Button size="small">Learn More</Button>
                 </CardActions>
                 </Card>
             </div>
@@ -82,6 +81,8 @@ class VacationRental extends Component {
     }   
     
 }
+
+export default VacationRental;
 
 VacationRental.propTypes = {
     title: PropTypes.string.isRequired,
@@ -93,6 +94,4 @@ VacationRental.propTypes = {
     rating: PropTypes.object.isRequired,
     propertyId: PropTypes.number.isRequired
 }    
-
-export default VacationRental;
 
